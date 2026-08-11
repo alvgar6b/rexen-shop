@@ -7,7 +7,7 @@
     --line: #3a2f22;
     --ink: #e9e0d2;
     --ink-soft: #b3a691;
-    --ink-faint: #7d7261;
+    --ink-faint: #8c8271;
     --brass: #a9884f;
     --brass-hover: #c2a668;
     --brass-soft: rgba(169,136,79,0.14);
@@ -30,6 +30,22 @@
   a{ color: var(--brass); }
   img{ max-width:100%; display:block; }
   button{ font-family: inherit; }
+
+  a:focus-visible,
+  button:focus-visible,
+  textarea:focus-visible,
+  input:focus-visible{
+    outline: 2px solid var(--brass);
+    outline-offset: 2px;
+    border-radius: 1px;
+  }
+  .nav__social a:focus-visible,
+  .footer__social a:focus-visible{
+    outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
 
   .banner{
     background: var(--brass);
@@ -494,6 +510,11 @@
     .nav__links{ display:none; }
     .hero{ padding: 0 20px 40px; }
     section.catalog{ padding: 20px 20px 60px; }
+    .press-quote{ padding: 36px 20px 0; }
+    .press-quote__text{ font-size: 18px; }
+    .tour{ padding: 0 20px; }
+    .tour__row{ font-size: 13.5px; }
+    .tour__date{ width: 66px; }
   }
 
   /* Notes-for-Claude panel */
@@ -618,9 +639,9 @@
   </nav>
   <div class="nav__right">
     <div class="nav__social">
-      <a href="https://instagram.com/Rexen_feeds_the_beast" target="_blank" rel="noopener" title="Instagram"><svg><use href="#ic-instagram"/></svg></a>
-      <a href="https://www.facebook.com/rexofyyyy/" target="_blank" rel="noopener" title="Facebook"><svg><use href="#ic-facebook"/></svg></a>
-      <a href="https://open.spotify.com/artist/7KhJgLNrQKnZeKzTbAikBx" target="_blank" rel="noopener" title="Spotify"><svg><use href="#ic-spotify"/></svg></a>
+      <a href="https://instagram.com/Rexen_feeds_the_beast" target="_blank" rel="noopener" title="Instagram" aria-label="REXEN on Instagram"><svg><use href="#ic-instagram"/></svg></a>
+      <a href="https://www.facebook.com/rexofyyyy/" target="_blank" rel="noopener" title="Facebook" aria-label="REXEN on Facebook"><svg><use href="#ic-facebook"/></svg></a>
+      <a href="https://open.spotify.com/artist/7KhJgLNrQKnZeKzTbAikBx" target="_blank" rel="noopener" title="Spotify" aria-label="REXEN on Spotify"><svg><use href="#ic-spotify"/></svg></a>
     </div>
     <button class="nav__cart" id="cartToggle">Cart (<span id="cartCount">0</span>)</button>
   </div>
@@ -731,9 +752,9 @@
 
 <footer>
   <div class="footer__social">
-    <a href="https://instagram.com/Rexen_feeds_the_beast" target="_blank" rel="noopener" title="Instagram"><svg><use href="#ic-instagram"/></svg></a>
-    <a href="https://www.facebook.com/rexofyyyy/" target="_blank" rel="noopener" title="Facebook"><svg><use href="#ic-facebook"/></svg></a>
-    <a href="https://open.spotify.com/artist/7KhJgLNrQKnZeKzTbAikBx" target="_blank" rel="noopener" title="Spotify"><svg><use href="#ic-spotify"/></svg></a>
+    <a href="https://instagram.com/Rexen_feeds_the_beast" target="_blank" rel="noopener" title="Instagram" aria-label="REXEN on Instagram"><svg><use href="#ic-instagram"/></svg></a>
+    <a href="https://www.facebook.com/rexofyyyy/" target="_blank" rel="noopener" title="Facebook" aria-label="REXEN on Facebook"><svg><use href="#ic-facebook"/></svg></a>
+    <a href="https://open.spotify.com/artist/7KhJgLNrQKnZeKzTbAikBx" target="_blank" rel="noopener" title="Spotify" aria-label="REXEN on Spotify"><svg><use href="#ic-spotify"/></svg></a>
   </div>
   <p class="note">REXEN Official Store — design mockup for review with Michael. Cart is a working front-end demo; checkout is not connected to real payment yet.<br>Photos &amp; prices sourced from Bandcamp and Linktree, verified 2026-08-11.</p>
 </footer>
@@ -742,7 +763,7 @@
 <aside class="cart-drawer" id="cartDrawer">
   <div class="cart-drawer__head">
     <h3>Your cart</h3>
-    <button class="cart-drawer__close" id="cartClose">&times;</button>
+    <button class="cart-drawer__close" id="cartClose" aria-label="Close cart">&times;</button>
   </div>
   <div class="cart-drawer__items" id="cartItems">
     <p class="cart-empty">Your cart is empty.</p>
@@ -757,7 +778,7 @@
 <div class="toast" id="toast"></div>
 
 <button class="notes-fab" id="notesFab">
-  <span class="notes-fab__dot"></span> Notes for Claude <span class="notes-fab__count" id="notesCount">0</span>
+  <span class="notes-fab__dot" aria-hidden="true"></span> Notes for Claude <span class="notes-fab__count" id="notesCount">0</span>
 </button>
 <div class="notes-panel" id="notesPanel">
   <div class="notes-panel__head">
@@ -765,7 +786,7 @@
       <h4>Notes for Claude</h4>
       <p>Write edit requests here, then copy &amp; paste into the chat.</p>
     </div>
-    <button class="notes-panel__close" id="notesClose">&times;</button>
+    <button class="notes-panel__close" id="notesClose" aria-label="Close notes panel">&times;</button>
   </div>
   <div class="notes-panel__body">
     <textarea id="notesText" placeholder="e.g. Product: The Chauffeur Vinyl — change price to 280 DKK. Or: hero photo feels too dark, brighten it."></textarea>
@@ -807,7 +828,7 @@
       html += '<div class="cart-item">' +
         '<div><div class="cart-item__name">' + item.name + '</div>' +
         '<div class="cart-item__meta">' + formatDKK(item.price) + '</div></div>' +
-        '<button class="cart-item__remove" data-index="' + i + '" title="Remove">&times;</button>' +
+        '<button class="cart-item__remove" data-index="' + i + '" title="Remove" aria-label="Remove ' + item.name + ' from cart">&times;</button>' +
       '</div>';
     });
     cartItemsEl.innerHTML = html;
